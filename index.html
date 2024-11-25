@@ -9,12 +9,58 @@
 <body>
     <div class="container">
         <h1>Magic Eight Ball</h1>
-        <p>Ask a yes/no question and shake the ball!</p>
-        <input type="text" id="question" placeholder="Type your question here">
-        <button id="shakeBtn">Shake the Ball!</button>
+        <p>Ask a yes/no question and shake the ball.</p>
+        <input type="text" id="question" placeholder="Type your question">
+        <button id="shakeBtn">Shake the Ball</button>
         <button id="stopBtn">Stop</button>
         <div class="magic-window" id="magicWindow">Your answer will appear here.</div>
     </div>
-    <script src="script.js"></script>
 </body>
+    <script>
+
+const responses = [
+    "It is certain.",
+    "You may rely on it.",
+    "Yes, absolutely!",
+    "Better not tell you now",
+    "Signs point to yes.",
+    "Don't count on it.",
+    "It is certain.",
+    "Very doubtful."
+];
+
+
+const questionInput = document.getElementById('question');
+const magicWindow = document.getElementById('magicWindow');
+const shakeBtn = document.getElementById('shakeBtn');
+const stopBtn = document.getElementById('stopBtn');
+
+function shakeBall() {
+    const question = questionInput.value.trim();
+
+ 
+    if (!question) {
+        alert('Please enter a question!');
+        return;
+    }
+
+
+    const randomIndex = Math.floor(Math.random() * responses.length);
+    const answer = responses[randomIndex];
+
+    magicWindow.textContent = answer;
+    questionInput.value = '';
+}
+
+function stopGame() {
+    magicWindow.textContent = "Thank you for playing the Magic Eight Ball.";
+
+    questionInput.disabled = true;
+    shakeBtn.disabled = true;
+    stopBtn.disabled = true;
+}
+
+shakeBtn.addEventListener('click', shakeBall);
+stopBtn.addEventListener('click', stopGame);
+</script>
 </html>
