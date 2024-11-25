@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commission</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Commission</h1>
+        <button onclick="calculateCommission()">Start Commission Calculator</button>
+        <div id="result" class="output"></div>
+    </div>
+
+    <script>
+        function calculateCommission() {
+            let subtotal = 0;
+            let input;
+            let username = prompt("Please enter your name:", "username");
+
+            // Validate username
+            if (!username) {
+                alert("You must enter your name to proceed.");
+                return;
+            }
+
+            do {
+                input = prompt("Enter a sales amount or type 'Done' to finish:");
+
+                // Handle cancel
+                if (input === null) {
+                    alert("Operation canceled.");
+                    return;
+                }
+
+                // Exit loop if "Done" is entered
+                if (input.toLowerCase() === "done") break;
+
+                // Parse and validate sales amount
+                let sale = parseFloat(input);
+                if (isNaN(sale) || sale < 0) {
+                    alert("Invalid input. Please enter a valid positive number.");
+                } else {
+                    subtotal += sale;
+                }
+            } while (true);
+
+            // Determine commission rate
+            let commissionRate = 0;
+            if (subtotal > 0 && subtotal <= 499.99) {
+                commissionRate = 5;
+            } else if (subtotal >= 500 && subtotal <= 999.99) {
+                commissionRate = 10;
+            } else if (subtotal >= 1000) {
+                commissionRate = 15;
+            }
+
+            // Calculate commission and total earnings
+            let commission = (subtotal * commissionRate) / 100;
+            let totalEarnings = subtotal + commission;
+
+            // Display results
+            let result = `
+                <p>Hello <span class="highlight">${username}</span>, here is your Weekly Commission Report:</p>
+                <p>Your sales total is <span class="highlight">$${subtotal.toFixed(2)}</span>, so your commission rate is <span class="highlight">${commissionRate.toFixed(2)}%</span>.</p>
+                <p>Your total commission is <span class="highlight">$${commission.toFixed(2)}</span>.</p>
+                <p>Your total earnings are <span class="highlight">$${totalEarnings.toFixed(2)}</span>.</p>
+            `;
+            document.getElementById("result").innerHTML = result;
+        }
+    </script>
+</body>
+</html>
